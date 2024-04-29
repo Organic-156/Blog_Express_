@@ -6,13 +6,33 @@ const Post = require('../models/Post');
 //Get Home
 router.get('', async (req, res) => {  //inside the '' if I put /about it will be the about page
     
-    const locals = {
-        title: 'NodeJs Blog',
-        description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
-    }    
-    
     try {
-        const data = await Post.find();
+        const locals = {
+            title: 'NodeJs Blog',
+            description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
+        }    
+
+        let perPage = 10;
+        let page = req.query.page || 1; //grabbing the URl Query 
+
+        const data = await Post.aggregate([ { $sort: { createdAt: -1 } }])
+        .skip(perPage * page - perPage)
+        .limit(perPage)
+        .exec();
+
+        // const count = await Post.count(); //is deprecated
+        const count = await Post.countDocuments({}); //is the new way to count the number of documents in the collection
+        const nextPage = parseInt(page) + 1;
+        const hasNextPage = nextPage <= Math.ceil(count / perPage);
+
+        res.render('index', {
+            locals, 
+            data, 
+            current: page, 
+            nextPage: hasNextPage ? nextPage : null,
+            currentRoute: '/'
+        });
+
         res.render('index', { locals, data }); //renders the index.ejs file and passed the locals object (I can pass multiple objects with the {} )
     } catch (error) {
         console.log(error);
@@ -26,6 +46,22 @@ router.get('/about', (req, res) => {  //type localhost:5000/about, note that I a
 module.exports = router; //allows other files to use the router
 
 
+// UNCOMMENT THIS IF YOU ONLY DONT WANT TO HAVE PAGINATION
+// router.get('', async (req, res) => {  //inside the '' if I put /about it will be the about page
+//     const locals = {
+//         title: 'NodeJs Blog',
+//         description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
+//     }
+
+//     try {
+//         const data = await Post.find();
+//         res.render('index', { locals, data }); //renders the index.ejs file and passed the locals object (I can pass multiple objects with the {} )
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
+
+// ONLY EXECUTE THIS FUNCTION ONCE TO INSERT DATA INTO THE DATABASE
 // function insertPostData () { //Insert Data into the database and it is now commented to stop executing multiple
 //     Post.insertMany([
 //     {
@@ -71,4 +107,16 @@ module.exports = router; //allows other files to use the router
 //     ])
 // }
 
+// function insertPostData() {
+//     Post.insertMany([
+//         {
+//         title: "This is some Random Title",
+//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+//         },
+//         {
+//         title: "Python is a great language",
+//         body: "Python is a great language for beginners"
+//         },
+//     ]);
+// }
 // insertPostData();
