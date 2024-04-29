@@ -1,14 +1,21 @@
 require('dotenv').config(); //So we can use the .env file
 
 const express = require('express'); // We can now use the express variable to create an express ap
+const expressLayout = require('express-ejs-layouts'); // Including the express - ejs layout
 
 const app = express(); // We create an express app
 const PORT = 5000 || process.env.PORT; // We set the port to 5000 or the port in the .env file
 
-app.get('',(req, res) => {  //inside the '' if I put /about it will be the about page
-    res.send("Hello World");
-})
 
+app.use(express.static('public'));
+
+
+// Template Engine 
+app.use(expressLayout); // We use the express layout
+app.set('layout', './layouts/main');
+app.set('view engine', 'ejs'); //View engine is set to ejs
+
+app.use('/', require('./server/routes/main'));
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
