@@ -300,15 +300,14 @@ a {
 
 /* SeachBar */
 .searchBar {
-    visibility: hidden;
-    transform: translateY(-100px);
+    visibility: hidden; /*To show comment this line and the transform: translateY(-100px)*/
+    transform: translateY(-100px); 
     background-color: var(--black);
     padding: 4px 0;
     position: absolute;
     left: 0;
     right: 0;
 }
-
 
 .searchBar.open {
     transform: translateY(0);
