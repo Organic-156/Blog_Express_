@@ -12,7 +12,7 @@ router.get('', async (req, res) => {  //inside the '' if I put /about it will be
             description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
         }    
 
-        let perPage = 10;
+        let perPage = 12;
         let page = req.query.page || 1; //grabbing the URl Query 
 
         const data = await Post.aggregate([ { $sort: { createdAt: -1 } }])
@@ -38,6 +38,27 @@ router.get('', async (req, res) => {  //inside the '' if I put /about it will be
         console.log(error);
     }
 });
+
+// Get Post id
+router.get('/post/:id', async (req, res) => {  //inside the '' if I put /about it will be the about page
+    try {
+        
+        let slug  = req.params.id;
+        const data = await Post.findById({ _id: slug });
+
+        const locals = {
+            title: data.title,
+            description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
+        }
+
+    
+        
+        res.render('post', { locals, data }); //renders the index.ejs file and passed the locals object (I can pass multiple objects with the {} )
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 router.get('/about', (req, res) => {  //type localhost:5000/about, note that I added '/' 
     res.render('about'); //renders the index.ejs file
