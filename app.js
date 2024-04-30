@@ -12,6 +12,10 @@ const PORT = 5000 || process.env.PORT; // We set the port to 5000 or the port in
 //connect to Database
 connectDB(); // We call the connectDB function to connect to the database
 
+//
+app.use(express.urlencoded({ extended: true })); // We use the express urlencoded method to parse the form data
+app.use(express.json()); // We use the express json method to parse the json data
+
 app.use(express.static('public'));
 
 
