@@ -59,6 +59,36 @@ router.get('/post/:id', async (req, res) => {  //inside the '' if I put /about i
     }
 });
 
+//Get post search
+router.post('/search', async (req, res) => {  //inside the '' if I put /about it will be the about page
+    try {
+        
+        const locals = {
+            title: 'Search',
+            description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
+        }
+
+        let searchTerm = req.body.searchTerm;
+        const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g, "");
+
+        const data = await Post.find({
+            $or:[
+                { title: { $regex: new RegExp(searchNoSpecialChar, 'i')}},
+                { body: { $regex: new RegExp(searchNoSpecialChar, 'i')}}
+            ]
+        })
+        
+        // const data = await Post.find();
+        res.render("search", {
+            data,
+            locals
+            }); //renders the index.ejs file and passed the locals object (I can pass multiple objects with the {} )
+    
+        } catch (error) {
+        console.log(error);
+    }
+});
+
 
 router.get('/about', (req, res) => {  //type localhost:5000/about, note that I added '/' 
     res.render('about'); //renders the index.ejs file
