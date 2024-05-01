@@ -7,8 +7,7 @@
     <!-- post can be named to something else but make sure to refactor all uses -->
     <% data.forEach(post => { %> 
         <li>
-
-            <a href="/post/<<%= post._id %>">
+            <a href="/post/<%= post._id %>">
                 <%= post.title %> &nearr;
             </a>
             <div class="admin-post-controls">
