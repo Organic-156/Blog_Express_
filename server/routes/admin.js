@@ -35,7 +35,10 @@ router.get('/admin', async (req, res) => {  //inside the '' if I put /about it w
             title: 'Admin ',
             description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
         }
-        res.render('admin/index', { locals, layout: adminLayout }); //renders the index.ejs file and passed the locals object (I can pass multiple objects with the {} )
+        res.render('admin/index', { 
+            locals, 
+            layout: adminLayout 
+        }); //renders the index.ejs file and passed the locals object (I can pass multiple objects with the {} )
     } catch (error) {
         console.log(error);
     }
@@ -90,9 +93,27 @@ router.post('/register', async (req, res) => {  //inside the '' if I put /about 
     }
 });
 
-//post Admin - Check Login 
+//post Admin - Dashboard (Requires Login because there is a Middleware)
 router.get('/dashboard', authMiddleware, async (req, res) => {
-    res.render('admin/dashboard');
+
+    try {
+        const locals = {
+            title: 'Dashboard',
+            description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
+        }
+        
+        const data = await Post.find();
+        res.render('admin/dashboard', { 
+            locals,
+            data //Load the data from the database and Look at dashboard.ejs you will see the "data" for each
+        });
+
+    } catch (error) {
+        
+    }
+
+
+
 });
 
 module.exports= router; 
