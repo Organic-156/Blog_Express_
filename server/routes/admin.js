@@ -134,6 +134,31 @@ router.get('/add-post', authMiddleware, async (req, res) => {
     }
 });
 
+// Post Admin - Create new Post 
+// I do not know why /admin/add-post is not working, but /add-post is working
+router.post('/add-post', authMiddleware, async (req, res) => {
+
+    try {
+        console.log(req.body.title);
+        console.log(req.body.body);
+        
+        try {
+            const newPost = new Post({
+                title: req.body.title,
+                body: req.body.body
+            });
+            await Post.create(newPost);
+            res.redirect('/dashboard');
+        } catch (error) {
+            res.status(500).json({ message: 'Internal Server Error'})
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
 module.exports= router; 
 
 
