@@ -93,7 +93,7 @@ router.post('/register', async (req, res) => {  //inside the '' if I put /about 
     }
 });
 
-//post Admin - Dashboard (Requires Login because there is a Middleware)
+//Get Admin - Dashboard (Requires Login because there is a Middleware)
 router.get('/dashboard', authMiddleware, async (req, res) => {
 
     try {
@@ -105,15 +105,33 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
         const data = await Post.find();
         res.render('admin/dashboard', { 
             locals,
-            data //Load the data from the database and Look at dashboard.ejs you will see the "data" for each
+            data, //Load the data from the database and Look at dashboard.ejs you will see the "data" for each
+            layout: adminLayout 
         });
 
     } catch (error) {
-        
+        console.log(error);
     }
+});
 
+//Get Admin - Create new Post 
+router.get('/add-post', authMiddleware, async (req, res) => {
 
+    try {
+        const locals = {
+            title: 'Add Post',
+            description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
+        }
 
+        const data = await Post.find();
+        res.render('admin/add-post', {
+            locals,
+            layout: adminLayout 
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 module.exports= router; 
