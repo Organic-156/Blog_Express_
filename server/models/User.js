@@ -14,4 +14,4 @@ const UserSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('User', PostSchema); //In the MongoDb, in a collection called blog there is a schema called posts
+module.exports = mongoose.model('User', UserSchema); //In the MongoDb, in a collection called blog there is a schema called posts
