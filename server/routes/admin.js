@@ -8,6 +8,8 @@ const jwt = require('jsonwebtoken');
 const adminLayout = '../views/layouts/admin'; //This is the path to the admin layout
 const jwtSecret = process.env.JWT_SECRET;
 
+//router .get .post .put .delete are the HTTP methods from Express and Built In 
+
 //Get Admin Check Login (middleware func)
 const authMiddleware = (req, res, next) => {
     const token = req.cookies.token;
@@ -183,7 +185,7 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
 // Put Admin - Edit Post 
 router.put('/edit-post/:id', authMiddleware, async (req, res) => {
     try {
-        //To get the Id of the post we are editing
+        //To get the Id of the post we are editing then edit (Built In Method: findByIdAndUpdate)
         await Post.findByIdAndUpdate(req.params.id, { 
             title: req.body.title,
             body: req.body.body,
@@ -192,6 +194,18 @@ router.put('/edit-post/:id', authMiddleware, async (req, res) => {
 
         res.redirect(`/edit-post/${req.params.id}`);
 
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
+// Admin - Delete Post 
+router.delete('/delete-post/:id', authMiddleware, async (req, res) => { 
+    try {
+        //To get the Id of the post we are editing then edit (Built In Method: deleteOne)
+        await Post.deleteOne({ _id: req.params.id });
+        res.redirect('/dashboard');
     } catch (error) {
         console.log(error);
     }
