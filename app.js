@@ -2,6 +2,7 @@ require('dotenv').config(); //So we can use the .env file
 
 const express = require('express'); // We can now use the express variable to create an express ap
 const expressLayout = require('express-ejs-layouts'); // Including the express - ejs layout
+const methodOverride = require('method-override'); // Including the method override use for updating post after edit
 const cookieParser = require('cookie-parser'); // Including the cookie parser
 const session = require('express-session'); // Including the express session
 const MongoStore  = require('connect-mongo'); // Including the connect-mongo
@@ -20,6 +21,7 @@ connectDB(); // We call the connectDB function to connect to the database
 app.use(express.urlencoded({ extended: true })); // We use the express urlencoded method to parse the form data
 app.use(express.json()); // We use the express json method to parse the json data
 app.use(cookieParser()); // We use the cookie parser
+app.use(methodOverride('_method'));
 
 app.use(session({
     secret: 'keyboard cat', 
