@@ -158,31 +158,44 @@ router.post('/add-post', authMiddleware, async (req, res) => {
     }
 });
 
-
-
-// Put Admin - Edit Post 
-router.put('/add-post/:id', authMiddleware, async (req, res) => {
-
+// Get Admin - Edit Post 
+router.get('/edit-post/:id', authMiddleware, async (req, res) => {
     try {
-        try {
-            //To get the Id of the post we are editing
-            await Post.findByIdAndUpdate(req.params.id, { 
-                title: req.body.title,
-                body: req.body.body,
-                updateAt: Date.now()
-            });
 
-            res.redirect(`/edit-post/${req.params.id}`);
-
-        } catch (error) {
-            res.status(500).json({ message: 'Internal Server Error' })
+        const locals = {
+            title: 'Add Post',
+            description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
         }
+
+        const data = await Post.findOne({ _id: req.params.id });
+
+        res.render('admin/edit-post', {
+            locals,
+            data, 
+            layout: adminLayout
+        });
 
     } catch (error) {
         console.log(error);
     }
 });
 
+// Put Admin - Edit Post 
+router.put('/edit-post/:id', authMiddleware, async (req, res) => {
+    try {
+        //To get the Id of the post we are editing
+        await Post.findByIdAndUpdate(req.params.id, { 
+            title: req.body.title,
+            body: req.body.body,
+            updateAt: Date.now()
+        });
+
+        res.redirect(`/edit-post/${req.params.id}`);
+
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 module.exports= router; 
 
