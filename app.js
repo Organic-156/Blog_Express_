@@ -16,6 +16,9 @@ const PORT = 5000 || process.env.PORT; // We set the port to 5000 or the port in
 
 //connect to Database
 connectDB(); // We call the connectDB function to connect to the database
+//from routerHelpers.js
+const { isActiveRoute } = require('./server/helpers/routeHelpers'); 
+
 
 //
 app.use(express.urlencoded({ extended: true })); // We use the express urlencoded method to parse the form data
@@ -40,6 +43,9 @@ app.use(express.static('public'));
 app.use(expressLayout); // We use the express layout
 app.set('layout', './layouts/main');
 app.set('view engine', 'ejs'); //View engine is set to ejs
+
+//Global Variables
+app.locals.isActiveRoute = isActiveRoute; //We set the isActiveRoute to a global variable
 
 app.use('/', require('./server/routes/main'));
 app.use('/', require('./server/routes/admin'));

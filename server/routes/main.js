@@ -48,7 +48,8 @@ router.get('/post/:id', async (req, res) => {  //inside the '' if I put /about i
 
         const locals = {
             title: data.title,
-            description: 'Simple log created with NodeJs, ExpressJs and MongoDB'
+            description: 'Simple log created with NodeJs, ExpressJs and MongoDB',
+            currentRoute: `/post/${slug}`
         }
 
     
@@ -81,7 +82,8 @@ router.post('/search', async (req, res) => {  //inside the '' if I put /about it
         // const data = await Post.find();
         res.render("search", {
             data,
-            locals
+            locals,
+            currentRoute: '/'
             }); //renders the index.ejs file and passed the locals object (I can pass multiple objects with the {} )
     
         } catch (error) {
@@ -91,7 +93,9 @@ router.post('/search', async (req, res) => {  //inside the '' if I put /about it
 
 
 router.get('/about', (req, res) => {  //type localhost:5000/about, note that I added '/' 
-    res.render('about'); //renders the index.ejs file
+    res.render('about', {
+        currentRoute: '/about'
+    }); //renders the index.ejs file
 });
 
 module.exports = router; //allows other files to use the router
