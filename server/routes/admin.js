@@ -159,6 +159,31 @@ router.post('/add-post', authMiddleware, async (req, res) => {
 });
 
 
+
+// Put Admin - Edit Post 
+router.put('/add-post/:id', authMiddleware, async (req, res) => {
+
+    try {
+        try {
+            //To get the Id of the post we are editing
+            await Post.findByIdAndUpdate(req.params.id, { 
+                title: req.body.title,
+                body: req.body.body,
+                updateAt: Date.now()
+            });
+
+            res.redirect(`/edit-post/${req.params.id}`);
+
+        } catch (error) {
+            res.status(500).json({ message: 'Internal Server Error' })
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
 module.exports= router; 
 
 
