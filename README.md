@@ -4,6 +4,8 @@ Blog with Node.js, Express &amp; MongoDB
 This is an inspired Project from Net Ninja: 
 Which allowed me to understand some basics of using Node, ExpressJs and MongoDB
 
+--- 
+
 Youtube Link: https://youtu.be/-foo92lFIto?si=Wl-RJ6Qi0TYYV-TN
 
 Throughout this project I made a blog where i can post new content, delete, and edit them. 
@@ -15,3 +17,21 @@ which basically dictates the user data or the current user login (thats the cont
 
 Finished May 1, 2024
 Organic-156
+---
+Features:
+An Interactive Blog Page which uses MongoDB for storing contents
+
+---
+Made with: 
+HTML5 
+Javascript ES6
+  - DOM manipulation
+CSS
+MongoDB
+  - Use for Token and authoration 
+Express Js
+  - Routers
+  - Middleware Authentication with Tokens and Cookies 
+Node Js
+
+-
