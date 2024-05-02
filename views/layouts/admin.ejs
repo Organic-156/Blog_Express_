@@ -15,17 +15,16 @@
 
 <body>
 
+    <div class="container">
+        <%- include('../partials/header_admin.ejs') %>
 
-        <div class="container">
-            <%- include('../partials/header_admin.ejs') %>
+            <main class="main">
+                <%- body %> <!-- Gets the content of index.ejs -->
+            </main>
 
-                <main class="main">
-                    <%- body %> <!-- Gets the content of index.ejs -->
-                </main>
+            <%- include('../partials/footer.ejs') %>
 
-                <%- include('../partials/footer.ejs') %>
-
-        </div>
+    </div>
 
 </body>
 
