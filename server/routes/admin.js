@@ -211,6 +211,14 @@ router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
     }
 });
 
+// Get Admin - Logout
+//Deleting Cookie will remove token
+router.get('/logout', authMiddleware, async (req, res) => {
+    res.clearCookie('token');
+    res.json({ message: 'Logged out Successful' });
+    res.redirect('/');
+});
+
 module.exports= router; 
 
 
