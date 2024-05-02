@@ -18,10 +18,12 @@ which basically dictates the user data or the current user login (thats the cont
 Finished May 1, 2024
 Organic-156
 ---
+
 Features:
 An Interactive Blog Page which uses MongoDB for storing contents
 
 ---
+
 Made with: 
 HTML5 
 Javascript ES6
@@ -33,5 +35,3 @@ Express Js
   - Routers
   - Middleware Authentication with Tokens and Cookies 
 Node Js
-
--
